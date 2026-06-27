@@ -30,7 +30,7 @@ COPY us_counties_pop_est_2019
 FROM '/Users/kanupriya/Desktop/Tanvi_SQL/CSV/us_counties_pop_est_2019.csv'
 WITH (FORMAT CSV, HEADER)
 
-
+--Calculating the natural increase in population in the year 2019
 SELECT * FROM us_counties_pop_est_2019 ;
 SELECT county_name AS county,
 	   state_name AS state,
@@ -40,6 +40,7 @@ SELECT county_name AS county,
 FROM us_counties_pop_est_2019
 ORDER BY natural_increase ASC;
 
+--Validating the population estimates for the year 2019 
 SELECT county_name AS county,
 	   state_name AS state,
 	   pop_est_2019 AS pop, 
@@ -50,6 +51,7 @@ SELECT county_name AS county,
 FROM us_counties_pop_est_2019
 ORDER BY difference;
 
+--Calculating the percentage of county area covered by water 
 SELECT state_name AS state,
 	   county_name AS county,
 	   area_land,
