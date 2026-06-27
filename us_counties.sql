@@ -30,3 +30,45 @@ COPY us_counties_pop_est_2019
 FROM '/Users/kanupriya/Desktop/Tanvi_SQL/CSV/us_counties_pop_est_2019.csv'
 WITH (FORMAT CSV, HEADER)
 
+
+SELECT * FROM us_counties_pop_est_2019 ;
+SELECT county_name AS county,
+	   state_name AS state,
+	   births_2019 AS births,
+	   deaths_2019 AS deaths,
+	   births_2019-deaths_2019 AS natural_increase
+FROM us_counties_pop_est_2019
+ORDER BY natural_increase ASC;
+
+SELECT county_name AS county,
+	   state_name AS state,
+	   pop_est_2019 AS pop, 
+	   pop_est_2018 + births_2019 + international_migr_2019 + domestic_migr_2019 + 
+	   residual_2019 - deaths_2019 AS components_total,
+	   pop_est_2019 - (pop_est_2018 + births_2019 + international_migr_2019 + domestic_migr_2019 + 
+	   residual_2019 - deaths_2019) AS difference
+FROM us_counties_pop_est_2019
+ORDER BY difference;
+
+SELECT state_name AS state,
+	   county_name AS county,
+	   area_land,
+	   area_water,
+	   area_water:: numeric/(area_land + area_water)*100 AS pct_of_water
+FROM us_counties_pop_est_2019
+ORDER BY pct_of_water DESC;
+
+
+
+
+
+	   
+	   
+
+
+	   
+
+
+
+
+
