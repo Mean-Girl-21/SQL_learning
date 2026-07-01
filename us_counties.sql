@@ -60,6 +60,40 @@ SELECT state_name AS state,
 FROM us_counties_pop_est_2019
 ORDER BY pct_of_water DESC;
 
+-- Tracking percent change 
+CREATE TABLE percent_change (
+	department text,
+	spend_2019 numeric(10,2),
+	spend_2022 numeric(10,2)
+);
+INSERT INTO percent_change 
+VALUES ('Assessor' , 178556 , 179500), 
+	   ('Building' , 250000 , 289000),
+	   ('Clerk' , 451980 , 650000),
+	   ('Library' , 87777 , 90001),
+	   ('Parks' , 250000 , 223000),
+	   ('Water' , 199000 , 195000);
+
+SELECT * FROM percent_change; 
+
+SELECT  department, 
+		spend_2019, 
+		spend_2022,
+		round(((spend_2022 - spend_2019)/spend_2019)*100, 1) AS pct_change --ROUND function is used to remove all but one decimal space
+FROM percent_change
+ORDER BY pct_change DESC;
+
+--Aggregate functions are used to calculate multiple results from the same set of values in a column
+SELECT sum(pop_est_2019) AS county_sum,
+	   round(avg(pop_est_2019),1) AS county_avg
+FROM us_counties_pop_est_2019;
+
+--
+
+		
+
+
+
 
 
 
