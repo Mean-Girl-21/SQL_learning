@@ -88,7 +88,36 @@ SELECT sum(pop_est_2019) AS county_sum,
 	   round(avg(pop_est_2019),1) AS county_avg
 FROM us_counties_pop_est_2019;
 
---
+----Percentiles indicate the point in an ordered set of data below which a certain percentage of data are found
+--Using percentile_cont() and percentile_disc() to find median
+CREATE TABLE percentile_test (numbers integer);
+
+INSERT INTO percentile_test 
+VALUES (1),(2),(3),(4),(5),(6);
+
+SELECT 
+	percentile_cont(0.5)
+	WITHIN GROUP (ORDER BY numbers),
+	percentile_disc(0.5)
+	WITHIN GROUP (ORDER BY numbers)
+FROM percentile_test; 
+
+--Finding other quantiles with percentile_cont() and percentile_disc()
+SELECT unnest(
+		percentile_cont(ARRAY[0.25, 0.5, 0.75])
+		WITHIN GROUP (ORDER BY pop_est_2019)
+		) AS quartiles
+FROM us_counties_pop_est_2019;  
+
+--Finding mode using mode() function
+SELECT mode() WITHIN GROUP (ORDER BY births_2019)
+FROM us_counties_pop_est_2019;
+
+SELECT county_name , births_2019
+FROM us_counties_pop_est_2019
+WHERE births_2019 = (SELECT 
+	mode() WITHIN GROUP (ORDER BY births_2019) 
+FROM us_counties_pop_est_2019);
 
 		
 
